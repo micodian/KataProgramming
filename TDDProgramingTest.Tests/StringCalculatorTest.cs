@@ -72,7 +72,18 @@ namespace TDDProgramingTest.Tests
             var result = _stringCalculator?.Add(input);
             //Assert
             Assert.AreEqual(6, result);
-            //test
+            
+        }
+
+        [TestMethod]
+        public void StringCalculator_Add_Method_Should_Return_While_Supporting_Different_Delimeters()
+        {
+            //Arrange
+            string input = "//;\n1;2";
+            //Act
+            var result = _stringCalculator?.Add(input);
+            //Assert
+            Assert.AreEqual(3, result);            
         }
     }
 }

@@ -117,5 +117,16 @@ namespace TDDProgramingTest.Tests
             Assert.IsNotNull(expectedExcetpion);
             Assert.AreEqual(expectedExcetpion.Message, "negatives not allowed: -1");
         }
+
+        [TestMethod]
+        public void StringCalculator_Add_Method_Should_Not_Add_Disallowed_Number()
+        {
+            //Arrange
+            string input = "1,2, 1001";
+            //Act
+            var result = _stringCalculator?.Add(input);
+            //Assert
+            Assert.AreEqual(3, result);
+        }
     }
 }

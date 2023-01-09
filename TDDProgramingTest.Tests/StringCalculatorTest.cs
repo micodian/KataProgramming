@@ -85,5 +85,37 @@ namespace TDDProgramingTest.Tests
             //Assert
             Assert.AreEqual(3, result);            
         }
+
+        [TestMethod]
+        public void StringCalculator_Add_Method_Should_Throw_Exception_For_Negative_Numbers()
+        {
+            //Arrange
+            string input = "1,4,-1";
+           
+            //Act & Assert
+            Assert.ThrowsException<ArgumentException>(() => _stringCalculator?.Add(input));
+        }
+
+        [TestMethod]
+        public void StringCalculator_Add_Method_Should_Throw_Exception_With_Message()
+        {
+            //Arrange
+            string input = "1,4,-1";
+            Exception expectedExcetpion = null!;
+
+            //Act & Assert
+            try
+            {
+                _ =_stringCalculator?.Add(input);
+            }
+            catch (Exception ex)
+            {
+
+                expectedExcetpion = ex;
+            }
+
+            Assert.IsNotNull(expectedExcetpion);
+            Assert.AreEqual(expectedExcetpion.Message, "negatives not allowed: -1");
+        }
     }
 }

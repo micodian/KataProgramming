@@ -7,28 +7,36 @@ using System.Threading.Tasks;
 namespace TDDProgramming.Kata
 {
     public class StringCalculator
-    {
-        //    "//;\n1;2"
+    {        
         private char[] delimeters = { ',', '\n'};
-        private const string SEPERATELINE = "//";  
+        private const string SEPERATELINE = "//";
+        private static List<string> negativeNumberList = new();   
+        private static bool negativeNumberFound = false;      
         public int Add(string input)
         {
             int sumOfNumbers = 0;
             if (string.IsNullOrEmpty(input))
             {
                 return sumOfNumbers;
-            }
+            }                      
+           
             if (input.StartsWith(SEPERATELINE) && input.Length > 1)
-            {                
+            {
                 var splitString = input.Split();
                 UpdateDelimeter(splitString[0]);
                 input = splitString[1];                
             }
             var splitInputStringWithDelimeter = input.Split(delimeters, StringSplitOptions.RemoveEmptyEntries);
             sumOfNumbers = GetSumOfNumbers(splitInputStringWithDelimeter);
+            if (negativeNumberList.Count > 0)
+            {
+                var negativeValues = String.Join(',', negativeNumberList);
+                throw new ArgumentException($"negatives not allowed: {negativeValues}");
+            }
             return sumOfNumbers;
         }
 
+        
         private void UpdateDelimeter(string splitString)
         {
             foreach (var character in splitString)
@@ -45,7 +53,16 @@ namespace TDDProgramming.Kata
             int sum = 0;
             foreach (var number in splitInputString)
             {
-                sum += int.Parse(number);
+                int parsedNumber = int.Parse(number);
+                if (parsedNumber > 0)
+                {
+                    sum += parsedNumber;
+                }
+                else
+                {
+                    negativeNumberList.Add(parsedNumber.ToString());
+                }
+                               
             }
             return sum;
             
